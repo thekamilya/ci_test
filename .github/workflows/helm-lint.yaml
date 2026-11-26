@@ -1,0 +1,21 @@
+name: Helm lint
+
+on:
+  pull_request:          # runs on every PR (opened or updated)
+  workflow_dispatch:     # adds a manual "Run workflow" button
+
+jobs:
+  helm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Show helm version
+        run: helm version
+
+      - name: Helm lint
+        run: helm lint charts/mychart
+
+      - name: Helm template
+        run: helm template test-release charts/mychart
